@@ -3,166 +3,146 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pengumuman Kelulusan SMPN 2 Ampana Kota</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Pengumuman Kelulusan</title>
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
     body {
-      background: linear-gradient(to right, #e0f7fa, #ffffff);
-      color: #333;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px 20px;
-    }
-    img {
-      width: 100px;
-      border-radius: 50%;
-      margin-bottom: 20px;
-      border: 3px solid #0288d1;
-    }
-    h1 {
-      font-size: 24px;
-      text-align: center;
-      color: #01579b;
-      margin-bottom: 20px;
-    }
-    #countdown {
-      font-size: 20px;
-      margin: 20px 0;
-      color: #d84315;
-      background: #fff3e0;
-      padding: 10px 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    #formNISN {
-      display: none;
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      margin-top: 20px;
-      max-width: 400px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    #formNISN label, #formNISN input {
-      width: 100%;
-      text-align: left;
-    }
-    input {
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button {
-      background-color: #0288d1;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
       color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      padding: 20px;
+    }
+
+    header img {
+      width: 100px;
+      border-radius: 10px;
       margin-bottom: 10px;
     }
-    button:hover {
-      background-color: #0277bd;
+
+    h1 {
+      font-size: 24px;
+      margin: 10px 0;
     }
-    #hasil {
-      margin-top: 10px;
-      font-size: 16px;
-      text-align: center;
+
+    #countdown {
+      font-size: 28px;
+      margin: 20px 0;
+      animation: pulse 1s infinite alternate;
     }
-    #catatan {
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
+    }
+
+    form {
+      display: none;
       margin-top: 20px;
-      background: #e3f2fd;
-      padding: 10px;
-      border-left: 4px solid #0288d1;
-      font-size: 14px;
     }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      margin-right: 10px;
+      width: 200px;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      background-color: #fff;
+      color: #0072ff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
     footer {
       margin-top: 40px;
       font-size: 14px;
-      color: #607d8b;
-      text-align: center;
+      color: #ddd;
     }
   </style>
 </head>
 <body>
-  <img src="https://raw.githubusercontent.com/Admin-Dekstop/Info-Kelulusan/main/logo.jpg" alt="Logo Sekolah">
-  <h1>Pengumuman Kelulusan Siswa SMP Negeri 2 Ampana Kota<br>Tahun Ajaran 2024/2025</h1>
+
+  <header>
+    <img src="https://raw.githubusercontent.com/Admin-Dekstop/Info-Kelulusan/main/logo.jpg" alt="Logo Sekolah" />
+    <h1>Pengumuman Kelulusan Siswa<br>SMP Negeri 2 Ampana Kota<br>Tahun Ajaran 2024/2025</h1>
+  </header>
 
   <div id="countdown"></div>
 
-  <div id="formNISN">
-    <label for="nisn">Masukkan NISN Anda:</label>
-    <input type="text" id="nisn" placeholder="Contoh: 1234567890">
-    <button onclick="cekKelulusan()">Lihat Hasil Kelulusan</button>
-    <div id="hasil"></div>
-    <div id="catatan">
-      <strong>📄 Catatan Penting:</strong><br>
-      Silakan klik link ini untuk mendapatkan surat SKL: 
-      <a href="https://forms.gle/yourformlink" target="_blank">Form Permintaan SKL</a>
-    </div>
-  </div>
+  <form id="nisnForm">
+    <label for="nisn">Masukkan NISN Anda:</label><br><br>
+    <input type="text" id="nisn" required />
+    <button type="submit">Lihat Hasil Kelulusan</button>
+  </form>
+
+  <div id="result"></div>
+
+  <div id="catatan" style="margin-top:30px;"></div>
 
   <footer>
-    &copy; 2025 SMP NEGERI 2 AMPANA KOTA<br>
-    Created by FANDY S. M. DALI
+    <p>© 2025 SMP NEGERI 2 AMPANA KOTA<br/>Created by FANDY S. M. DALI</p>
   </footer>
 
+  <!-- Panggil data siswa -->
+  <script src="data-siswa.js"></script>
+
+  <!-- Script logika utama -->
   <script>
-    const dataSiswa = {
-      "1234567890": { nama: "Ahmad Budi", status: "LULUS" },
-      "0987654321": { nama: "Siti Aminah", status: "TIDAK LULUS" },
-      "1122334455": { nama: "Joko Susilo", status: "LULUS" }
-    };
+    const countdownElement = document.getElementById('countdown');
+    const form = document.getElementById('nisnForm');
+    const result = document.getElementById('result');
+    const catatan = document.getElementById('catatan');
 
-    const countdownEl = document.getElementById('countdown');
-    const formNISN = document.getElementById('formNISN');
-    const hasilDiv = document.getElementById('hasil');
+    const targetDate = new Date('2025-05-07T21:00:00+08:00').getTime();
 
-    // Target waktu: 7 Mei 2025, 21:00 WITA (GMT+8) = 13:00 UTC
-    const targetWaktu = new Date("2025-05-07T13:00:00Z").getTime();
-
-    const countdownInterval = setInterval(() => {
+    const timer = setInterval(() => {
       const now = new Date().getTime();
-      const distance = targetWaktu - now;
+      const distance = targetDate - now;
 
-      if (distance > 0) {
-        const hari = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const jam = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const menit = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const detik = Math.floor((distance % (1000 * 60)) / 1000);
-        countdownEl.innerHTML = `Hitung Mundur: ${hari} Hari ${jam} Jam ${menit} Menit ${detik} Detik`;
+      if (distance <= 0) {
+        clearInterval(timer);
+        countdownElement.style.display = 'none';
+        form.style.display = 'block';
       } else {
-        clearInterval(countdownInterval);
-        countdownEl.style.display = 'none';
-        formNISN.style.display = 'flex';
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        countdownElement.innerHTML = `Waktu Menuju Pengumuman: ${days} Hari ${hours} Jam ${minutes} Menit ${seconds} Detik`;
       }
     }, 1000);
 
-    function cekKelulusan() {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
       const nisn = document.getElementById('nisn').value.trim();
-      const data = dataSiswa[nisn];
+      const siswa = dataSiswa[nisn];
 
-      if (data) {
-        hasilDiv.innerHTML = `
-          <p><strong>Nama:</strong> ${data.nama}</p>
-          <p><strong>Status Kelulusan:</strong> ${data.status}</p>
-        `;
+      if (siswa) {
+        result.innerHTML = `<strong>Nama:</strong> ${siswa.nama}<br><strong>Status:</strong> ${siswa.status}`;
+        catatan.innerHTML = `📄 Catatan Penting:<br>Silakan klik link ini untuk mendapatkan surat SKL: <a href="https://docs.google.com/forms/..." target="_blank" style="color:yellow;">Klik di sini</a>`;
       } else {
-        hasilDiv.innerHTML = '<p style="color:red;">Data tidak ditemukan. Periksa kembali NISN Anda.</p>';
+        result.innerHTML = "❌ Data tidak ditemukan. Periksa kembali NISN Anda.";
+        catatan.innerHTML = "";
       }
-    }
+    });
   </script>
 </body>
 </html>
