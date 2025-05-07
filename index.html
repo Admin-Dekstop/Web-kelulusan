@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistem Pengumuman Kelulusan SMP NEGERI 2 AMPANA KOTA</title>
+  <title>Pengumuman Kelulusan SMPN 2 Ampana Kota</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
@@ -98,7 +98,7 @@
 </head>
 <body>
   <img src="https://raw.githubusercontent.com/Admin-Dekstop/Info-Kelulusan/main/logo.jpg" alt="Logo Sekolah">
-  <h1>Pengumuman Kelulusan Siswa SMP Negeri 2 Ampana Kota Tahun Ajaran 2024/2025</h1>
+  <h1>Pengumuman Kelulusan Siswa SMP Negeri 2 Ampana Kota<br>Tahun Ajaran 2024/2025</h1>
 
   <div id="countdown"></div>
 
@@ -109,7 +109,8 @@
     <div id="hasil"></div>
     <div id="catatan">
       <strong>📄 Catatan Penting:</strong><br>
-      Silakan klik link ini untuk mendapatkan surat SKL: <a href="https://docs.google.com/forms/" target="_blank">Form Permintaan SKL</a>
+      Silakan klik link ini untuk mendapatkan surat SKL: 
+      <a href="https://forms.gle/yourformlink" target="_blank">Form Permintaan SKL</a>
     </div>
   </div>
 
@@ -118,13 +119,19 @@
     Created by FANDY S. M. DALI
   </footer>
 
-  <script src="dataSiswa.js"></script>
   <script>
+    // Data Siswa Sementara (NISN: {nama, status})
+    const dataSiswa = {
+      "1234567890": { nama: "Ahmad Budi", status: "LULUS" },
+      "0987654321": { nama: "Siti Aminah", status: "TIDAK LULUS" },
+      "1122334455": { nama: "Joko Susilo", status: "LULUS" }
+    };
+
     const countdownEl = document.getElementById('countdown');
     const formNISN = document.getElementById('formNISN');
     const hasilDiv = document.getElementById('hasil');
 
-    // Set waktu target (5 Mei 2025 pukul 23:00 WIB / GMT+7)
+    // Target waktu 5 Mei 2025 pukul 23:00 WIB (GMT+7)
     const targetWaktu = new Date("2025-05-05T16:00:00Z").getTime();
 
     const countdownInterval = setInterval(function() {
