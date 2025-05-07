@@ -130,7 +130,8 @@
     const formNISN = document.getElementById('formNISN');
     const hasilDiv = document.getElementById('hasil');
 
-    const targetWaktu = new Date("2025-05-07T13:00:00Z").getTime(); // 21:00 WITA = 13:00 UTC
+    // Target waktu: 7 Mei 2025, 21:00 WITA (GMT+8) = 13:00 UTC
+    const targetWaktu = new Date("2025-05-07T13:00:00Z").getTime();
 
     const countdownInterval = setInterval(() => {
       const now = new Date().getTime();
