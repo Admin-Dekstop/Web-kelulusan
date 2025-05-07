@@ -2,63 +2,115 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Pengumuman Kelulusan 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Pengumuman Kelulusan SMP NEGERI 2 AMPANA KOTA</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
       text-align: center;
-      padding: 2rem;
-      background: #f0f4f8;
+      padding: 20px;
+      background-color: #f0f4f8;
     }
-    input, button {
+    img {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    #countdown {
+      font-size: 20px;
+      color: #d9534f;
+      margin-bottom: 30px;
+    }
+    #formNISN {
+      display: none;
+      margin-top: 20px;
+    }
+    input {
       padding: 10px;
-      font-size: 1rem;
-      margin: 10px;
+      font-size: 16px;
+      width: 250px;
     }
-    #result {
-      margin-top: 2rem;
-      font-weight: bold;
+    button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      font-size: 16px;
+      cursor: pointer;
     }
-    .success {
-      color: green;
+    #hasil {
+      margin-top: 20px;
+      font-size: 18px;
     }
-    .fail {
-      color: red;
+    footer {
+      margin-top: 50px;
+      font-size: 14px;
+      color: #777;
     }
   </style>
 </head>
 <body>
+  <img src="https://raw.githubusercontent.com/Admin-Dekstop/Info-Kelulusan/main/logo.jpg" alt="Logo Sekolah">
+  <h1>Pengumuman Kelulusan Siswa SMP Negeri 2 Ampana Kota Tahun Ajaran 2024/2025</h1>
 
-  <h1>Pengumuman Kelulusan SMK Bro Fandy 2025</h1>
-  <p>Masukkan NISN kamu untuk melihat status kelulusan dan mengunduh SKL:</p>
+  <div id="countdown"></div>
 
-  <input type="text" id="nisnInput" placeholder="Masukkan NISN">
-  <button onclick="cekKelulusan()">Cek Kelulusan</button>
+  <div id="formNISN">
+    <label for="nisn">Masukkan NISN Anda:</label><br>
+    <input type="text" id="nisn" placeholder="Contoh: 1234567890">
+    <button onclick="cekKelulusan()">Lihat Hasil Kelulusan</button>
+    <div id="hasil"></div>
+    <div id="catatan" style="margin-top: 20px;">
+      <strong>📄 Catatan Penting:</strong><br>
+      Silakan klik link ini untuk mendapatkan surat SKL: <a href="https://docs.google.com/forms/" target="_blank">Form Permintaan SKL</a>
+    </div>
+  </div>
 
-  <div id="result"></div>
+  <footer>
+    &copy; 2025 SMP NEGERI 2 AMPANA KOTA<br>
+    Created by FANDY S. M. DALI
+  </footer>
 
+  <script src="dataSiswa.js"></script>
   <script>
-    const dataSiswa = {
-      "1234567890": "LULUS",
-      "0987654321": "LULUS",
-      // Tambah data siswa lain di sini
-    };
+    const countdownEl = document.getElementById('countdown');
+    const formNISN = document.getElementById('formNISN');
+    const hasilDiv = document.getElementById('hasil');
+
+    // Set waktu target (5 Mei 2025 pukul 23:00 WIB / GMT+7)
+    const targetWaktu = new Date("2025-05-05T16:00:00Z").getTime(); // 23:00 WIB == 16:00 UTC
+
+    const countdownInterval = setInterval(function() {
+      const sekarang = new Date().getTime();
+      const selisih = targetWaktu - sekarang;
+
+      if (selisih > 0) {
+        const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
+        const jam = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const menit = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
+        const detik = Math.floor((selisih % (1000 * 60)) / 1000);
+        countdownEl.innerHTML = `Hitung Mundur: ${hari} Hari ${jam} Jam ${menit} Menit ${detik} Detik`;
+      } else {
+        clearInterval(countdownInterval);
+        countdownEl.style.display = 'none';
+        formNISN.style.display = 'block';
+      }
+    }, 1000);
 
     function cekKelulusan() {
-      const nisn = document.getElementById('nisnInput').value.trim();
-      const resultDiv = document.getElementById('result');
+      const nisn = document.getElementById('nisn').value.trim();
+      const data = dataSiswa[nisn];
 
-      if (dataSiswa[nisn]) {
-        const sklLink = `skl/${nisn}.pdf`;
-        resultDiv.innerHTML = `
-          <p class="success">Selamat! Kamu dinyatakan <b>${dataSiswa[nisn]}</b> 🎉</p>
-          <a href="${sklLink}" download>⬇️ Download SKL Kamu</a>
+      if (data) {
+        hasilDiv.innerHTML = `
+          <p><strong>Nama:</strong> ${data.nama}</p>
+          <p><strong>Status Kelulusan:</strong> ${data.status}</p>
         `;
       } else {
-        resultDiv.innerHTML = `<p class="fail">NISN tidak ditemukan atau belum lulus. Coba lagi ya.</p>`;
+        hasilDiv.innerHTML = '<p style="color:red;">Data tidak ditemukan. Periksa kembali NISN Anda.</p>';
       }
     }
   </script>
-
 </body>
 </html>
