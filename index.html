@@ -4,49 +4,95 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistem Pengumuman Kelulusan SMP NEGERI 2 AMPANA KOTA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-      background-color: #f0f4f8;
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      padding: 30px 20px;
     }
     img {
-      width: 120px;
+      width: 100px;
+      border-radius: 50%;
       margin-bottom: 20px;
+      border: 3px solid #0288d1;
     }
     h1 {
-      font-size: 24px;
-      margin-bottom: 10px;
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 15px;
+      color: #01579b;
     }
     #countdown {
-      font-size: 20px;
-      color: #d9534f;
-      margin-bottom: 30px;
+      font-size: 22px;
+      margin: 20px 0;
+      color: #d84315;
+      background: #fff3e0;
+      padding: 10px 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     #formNISN {
       display: none;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       margin-top: 20px;
+      max-width: 400px;
+      width: 100%;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
     }
     input {
+      width: 100%;
       padding: 10px;
-      font-size: 16px;
-      width: 250px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
     }
     button {
+      background-color: #0288d1;
+      color: white;
       padding: 10px 20px;
-      margin-left: 10px;
-      font-size: 16px;
+      border: none;
+      border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #0277bd;
     }
     #hasil {
+      margin-top: 15px;
+      font-size: 16px;
+    }
+    #catatan {
       margin-top: 20px;
-      font-size: 18px;
+      background: #e3f2fd;
+      padding: 10px;
+      border-left: 4px solid #0288d1;
+      font-size: 14px;
     }
     footer {
-      margin-top: 50px;
+      margin-top: 40px;
       font-size: 14px;
-      color: #777;
+      color: #607d8b;
+      text-align: center;
     }
   </style>
 </head>
@@ -57,11 +103,11 @@
   <div id="countdown"></div>
 
   <div id="formNISN">
-    <label for="nisn">Masukkan NISN Anda:</label><br>
+    <label for="nisn">Masukkan NISN Anda:</label>
     <input type="text" id="nisn" placeholder="Contoh: 1234567890">
     <button onclick="cekKelulusan()">Lihat Hasil Kelulusan</button>
     <div id="hasil"></div>
-    <div id="catatan" style="margin-top: 20px;">
+    <div id="catatan">
       <strong>📄 Catatan Penting:</strong><br>
       Silakan klik link ini untuk mendapatkan surat SKL: <a href="https://docs.google.com/forms/" target="_blank">Form Permintaan SKL</a>
     </div>
@@ -79,7 +125,7 @@
     const hasilDiv = document.getElementById('hasil');
 
     // Set waktu target (5 Mei 2025 pukul 23:00 WIB / GMT+7)
-    const targetWaktu = new Date("2025-05-05T16:00:00Z").getTime(); // 23:00 WIB == 16:00 UTC
+    const targetWaktu = new Date("2025-05-05T16:00:00Z").getTime();
 
     const countdownInterval = setInterval(function() {
       const sekarang = new Date().getTime();
