@@ -2,147 +2,160 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pengumuman Kelulusan</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #00c6ff, #0072ff);
-      color: white;
-      text-align: center;
       margin: 0;
       padding: 0;
+      background: linear-gradient(to top, #2980b9, #6dd5fa);
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      text-align: center;
     }
 
-    header {
-      padding: 20px;
-    }
-
-    header img {
+    .logo {
       width: 100px;
-      border-radius: 10px;
-      margin-bottom: 10px;
+      margin-top: 30px;
     }
 
     h1 {
-      font-size: 24px;
+      font-size: 1.8em;
       margin: 10px 0;
     }
 
-    #countdown {
-      font-size: 28px;
-      margin: 20px 0;
-      animation: pulse 1s infinite alternate;
+    .flip-clock {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 30px 0;
     }
 
-    @keyframes pulse {
-      from { transform: scale(1); }
-      to { transform: scale(1.05); }
+    .flip-unit {
+      perspective: 1000px;
     }
 
-    form {
-      display: none;
-      margin-top: 20px;
+    .flip-card {
+      background: #fff;
+      color: #000;
+      font-size: 2em;
+      width: 60px;
+      height: 80px;
+      line-height: 80px;
+      text-align: center;
+      border-radius: 10px;
+      position: relative;
+      transition: transform 0.6s ease-in-out;
+      transform-style: preserve-3d;
+    }
+
+    .hidden { display: none; }
+
+    #inputSection {
+      margin: 30px auto;
+      max-width: 400px;
     }
 
     input[type="text"] {
       padding: 10px;
-      font-size: 16px;
+      width: 70%;
+      font-size: 1em;
+      border-radius: 5px;
       border: none;
-      border-radius: 8px;
-      margin-right: 10px;
-      width: 200px;
     }
 
     button {
-      padding: 10px 15px;
-      font-size: 16px;
-      background-color: #fff;
-      color: #0072ff;
+      padding: 10px 20px;
+      font-size: 1em;
+      margin-left: 10px;
       border: none;
-      border-radius: 8px;
+      background-color: #2ecc71;
+      color: white;
+      border-radius: 5px;
       cursor: pointer;
-      font-weight: bold;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
     }
 
     #result {
       margin-top: 20px;
-      font-size: 18px;
+      font-size: 1.2em;
     }
 
     footer {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #ddd;
+      margin-top: 50px;
+      font-size: 0.9em;
     }
   </style>
 </head>
 <body>
+  <img src="https://github.com/Admin-Dekstop/Info-Kelulusan/blob/main/logo.jpg?raw=true" class="logo" alt="Logo Sekolah" />
 
-  <header>
-    <img src="https://raw.githubusercontent.com/Admin-Dekstop/Info-Kelulusan/main/logo.jpg" alt="Logo Sekolah" />
-    <h1>Pengumuman Kelulusan Siswa<br>SMP Negeri 2 Ampana Kota<br>Tahun Ajaran 2024/2025</h1>
-  </header>
+  <h1>Pengumuman Kelulusan Siswa<br>SMP Negeri 2 Ampana Kota<br>Tahun Ajaran 2024/2025</h1>
 
-  <div id="countdown"></div>
+  <div id="countdown" class="flip-clock"></div>
 
-  <form id="nisnForm">
+  <div id="inputSection" class="hidden">
     <label for="nisn">Masukkan NISN Anda:</label><br><br>
-    <input type="text" id="nisn" required />
-    <button type="submit">Lihat Hasil Kelulusan</button>
-  </form>
-
-  <div id="result"></div>
-
-  <div id="catatan" style="margin-top:30px;"></div>
+    <input type="text" id="nisn" placeholder="Contoh: 1234567890" />
+    <button onclick="cekKelulusan()">Lihat Hasil Kelulusan</button>
+    <div id="result"></div>
+  </div>
 
   <footer>
-    <p>© 2025 SMP NEGERI 2 AMPANA KOTA<br/>Created by FANDY S. M. DALI</p>
+    <p>© 2025 SMP NEGERI 2 AMPANA KOTA<br>Created by FANDY S. M. DALI</p>
   </footer>
 
-  <!-- Panggil data siswa -->
-  <script src="data-siswa.js"></script>
-
-  <!-- Script logika utama -->
+  <script src="datasiswa.js"></script>
   <script>
-    const countdownElement = document.getElementById('countdown');
-    const form = document.getElementById('nisnForm');
-    const result = document.getElementById('result');
-    const catatan = document.getElementById('catatan');
+    const countdownEl = document.getElementById('countdown');
+    const inputSection = document.getElementById('inputSection');
 
-    const targetDate = new Date('2025-05-07T21:00:00+08:00').getTime();
+    const targetDate = new Date("2025-05-07T21:00:00+08:00").getTime(); // 21:00 WITA
 
-    const timer = setInterval(() => {
+    function formatNumber(num) {
+      return num.toString().padStart(2, '0');
+    }
+
+    function createFlipUnit(value) {
+      const div = document.createElement('div');
+      div.className = 'flip-unit';
+      div.innerHTML = `<div class="flip-card">${formatNumber(value)}</div>`;
+      return div;
+    }
+
+    function updateCountdown() {
       const now = new Date().getTime();
       const distance = targetDate - now;
 
-      if (distance <= 0) {
-        clearInterval(timer);
-        countdownElement.style.display = 'none';
-        form.style.display = 'block';
-      } else {
+      if (distance > 0) {
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        countdownElement.innerHTML = `Waktu Menuju Pengumuman: ${days} Hari ${hours} Jam ${minutes} Menit ${seconds} Detik`;
-      }
-    }, 1000);
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const nisn = document.getElementById('nisn').value.trim();
-      const siswa = dataSiswa[nisn];
+        countdownEl.innerHTML = '';
+        [days, hours, minutes, seconds].forEach(val => {
+          countdownEl.appendChild(createFlipUnit(val));
+        });
+      } else {
+        countdownEl.classList.add('hidden');
+        inputSection.classList.remove('hidden');
+        clearInterval(timerInterval);
+      }
+    }
+
+    const timerInterval = setInterval(updateCountdown, 1000);
+
+    function cekKelulusan() {
+      const nisn = document.getElementById("nisn").value.trim();
+      const resultDiv = document.getElementById("result");
+      const siswa = dataSiswa.find(s => s.nisn === nisn);
 
       if (siswa) {
-        result.innerHTML = `<strong>Nama:</strong> ${siswa.nama}<br><strong>Status:</strong> ${siswa.status}`;
-        catatan.innerHTML = `📄 Catatan Penting:<br>Silakan klik link ini untuk mendapatkan surat SKL: <a href="https://docs.google.com/forms/..." target="_blank" style="color:yellow;">Klik di sini</a>`;
+        resultDiv.innerHTML = `<strong>Nama:</strong> ${siswa.nama}<br><strong>Status:</strong> ${siswa.status}`;
       } else {
-        result.innerHTML = "❌ Data tidak ditemukan. Periksa kembali NISN Anda.";
-        catatan.innerHTML = "";
+        resultDiv.innerHTML = `<span style="color: red;">Data tidak ditemukan. Periksa kembali NISN Anda.</span>`;
       }
-    });
+    }
   </script>
 </body>
 </html>
