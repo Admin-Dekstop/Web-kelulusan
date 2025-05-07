@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pengumuman Kelulusan SMPN 2 Ampana Kota</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      margin: 0; padding: 0; box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
     }
     body {
@@ -19,7 +17,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: start;
       padding: 30px 20px;
     }
     img {
@@ -29,13 +26,13 @@
       border: 3px solid #0288d1;
     }
     h1 {
-      font-size: 26px;
+      font-size: 24px;
       text-align: center;
-      margin-bottom: 15px;
       color: #01579b;
+      margin-bottom: 20px;
     }
     #countdown {
-      font-size: 22px;
+      font-size: 20px;
       margin: 20px 0;
       color: #d84315;
       background: #fff3e0;
@@ -52,14 +49,15 @@
       margin-top: 20px;
       max-width: 400px;
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 8px;
+    #formNISN label, #formNISN input {
+      width: 100%;
+      text-align: left;
     }
     input {
-      width: 100%;
       padding: 10px;
       margin-bottom: 15px;
       border-radius: 5px;
@@ -73,13 +71,15 @@
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      margin-bottom: 10px;
     }
     button:hover {
       background-color: #0277bd;
     }
     #hasil {
-      margin-top: 15px;
+      margin-top: 10px;
       font-size: 16px;
+      text-align: center;
     }
     #catatan {
       margin-top: 20px;
@@ -120,7 +120,6 @@
   </footer>
 
   <script>
-    // Data Siswa Sementara (NISN: {nama, status})
     const dataSiswa = {
       "1234567890": { nama: "Ahmad Budi", status: "LULUS" },
       "0987654321": { nama: "Siti Aminah", status: "TIDAK LULUS" },
@@ -131,23 +130,22 @@
     const formNISN = document.getElementById('formNISN');
     const hasilDiv = document.getElementById('hasil');
 
-    // Target waktu 5 Mei 2025 pukul 23:00 WIB (GMT+7)
     const targetWaktu = new Date("2025-05-05T16:00:00Z").getTime();
 
-    const countdownInterval = setInterval(function() {
-      const sekarang = new Date().getTime();
-      const selisih = targetWaktu - sekarang;
+    const countdownInterval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetWaktu - now;
 
-      if (selisih > 0) {
-        const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
-        const jam = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const menit = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
-        const detik = Math.floor((selisih % (1000 * 60)) / 1000);
+      if (distance > 0) {
+        const hari = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const jam = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const menit = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const detik = Math.floor((distance % (1000 * 60)) / 1000);
         countdownEl.innerHTML = `Hitung Mundur: ${hari} Hari ${jam} Jam ${menit} Menit ${detik} Detik`;
       } else {
         clearInterval(countdownInterval);
         countdownEl.style.display = 'none';
-        formNISN.style.display = 'block';
+        formNISN.style.display = 'flex';
       }
     }, 1000);
 
