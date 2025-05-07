@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pengumuman Kelulusan 2025</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 2rem;
+      background: #f0f4f8;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 1rem;
+      margin: 10px;
+    }
+    #result {
+      margin-top: 2rem;
+      font-weight: bold;
+    }
+    .success {
+      color: green;
+    }
+    .fail {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Pengumuman Kelulusan SMK Bro Fandy 2025</h1>
+  <p>Masukkan NISN kamu untuk melihat status kelulusan dan mengunduh SKL:</p>
+
+  <input type="text" id="nisnInput" placeholder="Masukkan NISN">
+  <button onclick="cekKelulusan()">Cek Kelulusan</button>
+
+  <div id="result"></div>
+
+  <script>
+    const dataSiswa = {
+      "1234567890": "LULUS",
+      "0987654321": "LULUS",
+      // Tambah data siswa lain di sini
+    };
+
+    function cekKelulusan() {
+      const nisn = document.getElementById('nisnInput').value.trim();
+      const resultDiv = document.getElementById('result');
+
+      if (dataSiswa[nisn]) {
+        const sklLink = `skl/${nisn}.pdf`;
+        resultDiv.innerHTML = `
+          <p class="success">Selamat! Kamu dinyatakan <b>${dataSiswa[nisn]}</b> 🎉</p>
+          <a href="${sklLink}" download>⬇️ Download SKL Kamu</a>
+        `;
+      } else {
+        resultDiv.innerHTML = `<p class="fail">NISN tidak ditemukan atau belum lulus. Coba lagi ya.</p>`;
+      }
+    }
+  </script>
+
+</body>
+</html>
