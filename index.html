@@ -20,12 +20,10 @@
         const errorMessage = document.getElementById("errorMessage");
 
         if (sklFiles[nisnInput]) {
-            // Jika NISN valid, tampilkan tombol download
             downloadLink.href = sklFiles[nisnInput];
             downloadLink.style.display = "inline-block";
             errorMessage.style.display = "none";
         } else {
-            // Jika NISN tidak valid, tampilkan pesan error
             downloadLink.style.display = "none";
             errorMessage.style.display = "block";
         }
@@ -52,6 +50,7 @@
                 emoji.innerText = "🎉";
                 emoji.style.display = "block";
                 motivasiText.innerText = `Selamat, ${siswa.nama}! Kamu LULUS! Terus semangat dan raih cita-citamu!`;
+                motivasiText.className = "motivasi lulus";
                 motivasiText.style.display = "block";
                 confetti({
                     particleCount: 200,
@@ -62,12 +61,14 @@
                 emoji.innerText = "😢";
                 emoji.style.display = "block";
                 motivasiText.innerText = `Maaf, ${siswa.nama}. Kamu TIDAK LULUS. Jangan menyerah, terus berjuang!`;
+                motivasiText.className = "motivasi tidaklulus";
                 motivasiText.style.display = "block";
             }
         } else {
             emoji.innerText = "❓";
             emoji.style.display = "block";
             motivasiText.innerText = "NISN tidak ditemukan, periksa kembali NISN Anda.";
+            motivasiText.className = "motivasi";
             motivasiText.style.display = "block";
         }
     }
@@ -215,9 +216,16 @@
     .motivasi {
       font-size: 1.2em;
       margin-top: 10px;
-      color: #f39c12;
       font-weight: bold;
       display: none;
+    }
+
+    .lulus {
+      color: #28a745; /* hijau */
+    }
+
+    .tidaklulus {
+      color: #e74c3c; /* merah */
     }
 
     #downloadLink {
