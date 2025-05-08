@@ -8,20 +8,21 @@
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(to top, #2980b9, #6dd5fa);
+      background: linear-gradient(to bottom right, #f4f9fd, #dbeefd);
       font-family: 'Segoe UI', sans-serif;
-      color: white;
+      color: #222;
       text-align: center;
     }
 
     .logo {
-      width: 100px;
+      width: 80px;
       margin-top: 30px;
     }
 
     h1 {
-      font-size: 1.8em;
-      margin: 10px 0;
+      font-size: 1.4em;
+      margin: 10px 20px;
+      color: #333;
     }
 
     .flip-clock {
@@ -29,6 +30,7 @@
       justify-content: center;
       gap: 10px;
       margin: 30px 0;
+      flex-wrap: wrap;
     }
 
     .flip-unit {
@@ -36,43 +38,51 @@
     }
 
     .flip-card {
-      background: #fff;
+      background: #ffffff;
       color: #000;
-      font-size: 2em;
+      font-size: 1.5em;
       width: 60px;
       height: 80px;
       line-height: 80px;
       text-align: center;
-      border-radius: 10px;
-      position: relative;
-      transition: transform 0.6s ease-in-out;
-      transform-style: preserve-3d;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      font-weight: bold;
     }
 
     .hidden { display: none; }
 
     #inputSection {
       margin: 30px auto;
-      max-width: 400px;
+      max-width: 90%;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease forwards;
     }
 
     input[type="text"] {
-      padding: 10px;
-      width: 70%;
+      padding: 12px;
+      width: 80%;
       font-size: 1em;
-      border-radius: 5px;
-      border: none;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
     }
 
     button {
-      padding: 10px 20px;
+      padding: 12px 25px;
       font-size: 1em;
-      margin-left: 10px;
-      border: none;
-      background-color: #2ecc71;
+      background-color: #2980b9;
       color: white;
-      border-radius: 5px;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #3498db;
     }
 
     #result {
@@ -82,7 +92,41 @@
 
     footer {
       margin-top: 50px;
-      font-size: 0.9em;
+      font-size: 0.85em;
+      color: #555;
+      padding-bottom: 30px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 500px) {
+      .flip-card {
+        width: 50px;
+        height: 65px;
+        font-size: 1.2em;
+        line-height: 65px;
+      }
+
+      input[type="text"] {
+        width: 90%;
+      }
+
+      button {
+        margin-top: 10px;
+        width: 90%;
+      }
+
+      h1 {
+        font-size: 1.2em;
+      }
+
+      .logo {
+        width: 70px;
+      }
     }
   </style>
 </head>
@@ -94,8 +138,8 @@
   <div id="countdown" class="flip-clock"></div>
 
   <div id="inputSection" class="hidden">
-    <label for="nisn">Masukkan NISN Anda:</label><br><br>
-    <input type="text" id="nisn" placeholder="Contoh: 1234567890" />
+    <label for="nisn"><strong>Masukkan NISN Anda:</strong></label><br><br>
+    <input type="text" id="nisn" placeholder="Contoh: 1234567890" /><br>
     <button onclick="cekKelulusan()">Lihat Hasil Kelulusan</button>
     <div id="result"></div>
   </div>
