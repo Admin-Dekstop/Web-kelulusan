@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pengumuman Kelulusan</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      padding: 40px;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 300px;
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 30px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .emoji {
+      font-size: 48px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Pengumuman Kelulusan</h1>
+  <p>Silakan masukkan NISN Anda untuk melihat hasil kelulusan:</p>
+
+  <input type="text" id="nisnInput" placeholder="Masukkan NISN">
+  <br>
+  <button onclick="cekKelulusan()">Cek Kelulusan</button>
+
+  <div class="result">
+    <div id="statusEmoji" class="emoji"></div>
+    <div id="motivasiText"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script>
+    const siswaData = [
+      { nisn: "1234567890", nama: "Fulan Bin Fulan", lulus: true },
+      { nisn: "0987654321", nama: "Siti Binti Siti", lulus: false },
+      // Tambahkan data lainnya di sini...
+    ];
+
+    function cekKelulusan() {
+      const nisn = document.getElementById("nisnInput").value.trim();
+      const emoji = document.getElementById("statusEmoji");
+      const motivasiText = document.getElementById("motivasiText");
+
+      const siswa = siswaData.find(siswa => siswa.nisn === nisn);
+
+      if (siswa) {
+        if (siswa.lulus) {
+          emoji.innerText = "🎉";
+          emoji.style.display = "block";
+          motivasiText.innerText = `Selamat, ${siswa.nama}! Kamu LULUS! Terus semangat dan raih cita-citamu!`;
+          motivasiText.style.display = "block";
+          confetti({
+            particleCount: 200,
+            spread: 90,
+            origin: { y: 0.6 }
+          });
+
+          // Download PDF otomatis dari GitHub
+          const pdfUrl = `https://github.com/Admin-Dekstop/Info-Kelulusan/raw/main/pdf/${nisn}.pdf`;
+          const link = document.createElement('a');
+          link.href = pdfUrl;
+          link.download = `${nisn}.pdf`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+        } else {
+          emoji.innerText = "😢";
+          emoji.style.display = "block";
+          motivasiText.innerText = `Maaf, ${siswa.nama}. Kamu TIDAK LULUS. Jangan menyerah, terus berjuang!`;
+          motivasiText.style.display = "block";
+        }
+      } else {
+        emoji.innerText = "❓";
+        emoji.style.display = "block";
+        motivasiText.innerText = "NISN tidak ditemukan, periksa kembali NISN Anda.";
+        motivasiText.style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>
