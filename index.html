@@ -135,6 +135,12 @@
       display: none;
       animation: fadeIn 1s ease-in-out;
     }
+
+    .status {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+
   </style>
 </head>
 <body>
@@ -156,6 +162,7 @@
     </div>
 
     <div class="emoji" id="statusEmoji">🎉</div>
+    <div class="status" id="statusText"></div>
 
     <footer>
       © 2025 SMP NEGERI 2 AMPANA KOTA<br>
@@ -192,19 +199,32 @@
     function cekKelulusan() {
       const nisn = document.getElementById("nisnInput").value.trim();
       const emoji = document.getElementById("statusEmoji");
+      const statusText = document.getElementById("statusText");
 
-      // Contoh NISN lulus atau tidak (nanti kamu ganti dengan logikamu sendiri)
-      if (nisn === "1234567890") {
-        emoji.innerText = "🎉";
+      // Data siswa (NISN, Nama, Status Kelulusan)
+      const siswaData = {
+        "1234567890": { nama: "Andi Pratama", status: "Lulus" },
+        "0987654321": { nama: "Budi Santoso", status: "Tidak Lulus" },
+      };
+
+      if (siswaData[nisn]) {
+        const siswa = siswaData[nisn];
+        statusText.innerText = `${siswa.nama} - ${siswa.status}`;
         emoji.style.display = "block";
-        confetti({
-          particleCount: 200,
-          spread: 90,
-          origin: { y: 0.6 }
-        });
+        
+        if (siswa.status === "Lulus") {
+          emoji.innerText = "🎉";
+          confetti({
+            particleCount: 200,
+            spread: 90,
+            origin: { y: 0.6 }
+          });
+        } else {
+          emoji.innerText = "😢";
+        }
       } else {
-        emoji.innerText = "😢";
-        emoji.style.display = "block";
+        statusText.innerText = "NISN tidak ditemukan.";
+        emoji.style.display = "none";
       }
     }
   </script>
