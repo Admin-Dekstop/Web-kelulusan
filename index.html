@@ -2,158 +2,179 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pengumuman Kelulusan SMPN 2 Ampana Kota</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pengumuman Kelulusan</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #111;
-      color: #333;
-      text-align: center;
       margin: 0;
       padding: 0;
+      background-color: #111;
+      font-family: 'Comic Neue', cursive;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
+
     .container {
+      background-color: #fff;
+      color: #111;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
       max-width: 500px;
-      margin: 40px auto;
-      padding: 20px;
-      background-color: white;
-      border-radius: 25px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      width: 90%;
+      transition: all 0.5s ease;
     }
-    img {
-      width: 100px;
+
+    .container img {
+      max-width: 120px;
       margin-bottom: 20px;
     }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 10px;
+
+    .judul {
+      font-size: 1.5em;
+      margin: 10px 0;
     }
-    h2 {
-      font-size: 18px;
+
+    .subjudul {
+      font-size: 1.1em;
       margin-bottom: 20px;
     }
+
     .countdown {
       display: flex;
       justify-content: center;
       gap: 10px;
+      margin-top: 20px;
       flex-wrap: wrap;
     }
+
     .countdown div {
       background-color: #2c3e50;
-      color: white;
-      padding: 15px;
+      color: #fff;
+      padding: 15px 20px;
       border-radius: 15px;
-      font-size: 20px;
+      font-size: 1.5em;
       min-width: 60px;
     }
-    .input-nisn {
-      margin-top: 20px;
+
+    #inputSection {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 30px;
+      animation: fadeIn 1s ease-in-out;
     }
+
     input[type="text"] {
+      padding: 10px;
       width: 80%;
-      padding: 10px;
-      font-size: 16px;
-      border: 2px solid #ccc;
+      max-width: 300px;
+      border: 2px solid #2c3e50;
       border-radius: 10px;
-      margin-top: 10px;
+      font-size: 1em;
+      margin-bottom: 10px;
+      text-align: center;
     }
+
     button {
-      padding: 10px;
-      margin: 10px 0;
-      font-size: 16px;
-      width: 90%;
-      border-radius: 8px;
-      border: none;
-      background-color: #28a745;
+      padding: 10px 20px;
+      background-color: #2c3e50;
       color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1em;
       cursor: pointer;
-      transition: background-color 0.3s ease;
     }
+
     button:hover {
-      background-color: #218838;
+      background-color: #34495e;
     }
-    .result {
+
+    footer {
       margin-top: 30px;
-      font-size: 18px;
+      font-size: 0.9em;
+      color: #ccc;
     }
-    .footer {
-      margin-top: 30px;
-      font-size: 14px;
-      color: #aaa;
+
+    @media (max-width: 480px) {
+      .judul {
+        font-size: 1.3em;
+      }
+
+      .subjudul {
+        font-size: 1em;
+      }
+
+      .countdown div {
+        font-size: 1.2em;
+        min-width: 50px;
+      }
+
+      input[type="text"] {
+        width: 90%;
+      }
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .emoji {
-      font-size: 40px;
-      display: inline-block;
-      animation: popIn 2s ease-in-out;
-    }
-    .motivation {
-      margin-top: 10px;
-      font-style: italic;
-    }
-    @keyframes popIn {
-      0% { transform: scale(0); opacity: 0; }
-      50% { transform: scale(1.2); opacity: 1; }
-      100% { transform: scale(1); }
-    }
-    @keyframes explode {
-      0% { transform: scale(0); opacity: 0; }
-      50% { transform: scale(2); opacity: 1; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    .emoji.happy {
-      animation: explode 2s ease-in-out;
-    }
-    @media (max-width: 600px) {
-      .container {
-        margin: 20px;
-        width: auto;
-      }
-      input[type="text"], button {
-        width: 100%;
-      }
+      font-size: 3em;
+      margin-top: 20px;
+      display: none;
+      animation: fadeIn 1s ease-in-out;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="https://raw.githubusercontent.com/Admin-Dekstop/Info-Kelulusan/main/logo.jpg" alt="Logo Sekolah" />
-    <h1>Pengumuman Kelulusan Siswa</h1>
-    <h2>SMP Negeri 2 Ampana Kota<br>Tahun Ajaran 2024/2025</h2>
-
-    <div id="countdown" class="countdown"></div>
-
-    <div id="formNISN" class="input-nisn" style="display:none;">
-      <p>Masukkan NISN Anda:</p>
-      <input type="text" id="nisn" maxlength="10" />
-      <br />
-      <button onclick="cekKelulusan()">Lihat Hasil Kelulusan</button>
+    <img src="https://github.com/Admin-Dekstop/Info-Kelulusan/raw/main/logo.jpg" alt="Logo Sekolah">
+    <div class="judul">Pengumuman Kelulusan Siswa</div>
+    <div class="subjudul">SMP Negeri 2 Ampana Kota<br>Tahun Ajaran 2024/2025</div>
+    <p id="infoText">Pengumuman akan dibuka dalam:</p>
+    <div class="countdown" id="countdown">
+      <div id="days">00</div>
+      <div id="hours">00</div>
+      <div id="minutes">00</div>
+      <div id="seconds">00</div>
     </div>
 
-    <div id="hasil" class="result"></div>
+    <div id="inputSection">
+      <input id="nisnInput" type="text" placeholder="Masukkan NISN Anda" />
+      <button onclick="cekKelulusan()">Cek Kelulusan</button>
+    </div>
 
-    <div class="footer">
-      © 2025 SMP NEGERI 2 AMPANA KOTA<br />
+    <div class="emoji" id="statusEmoji">🎉</div>
+
+    <footer>
+      © 2025 SMP NEGERI 2 AMPANA KOTA<br>
       Created by FANDY S. M. DALI
-    </div>
+    </footer>
   </div>
 
   <script>
-    const dataSiswa = {
-      "1234567890": { nama: "Budi Santoso", status: "LULUS" },
-      "9876543210": { nama: "Susi Andini", status: "TIDAK LULUS" }
-    };
+    const countdownDate = new Date("2025-05-08T11:45:00+08:00").getTime();
 
-    const targetTanggal = new Date("2025-05-08T11:45:00+08:00").getTime();
-
-    const countdownInterval = setInterval(() => {
+    const countdownFunction = setInterval(() => {
       const now = new Date().getTime();
-      const distance = targetTanggal - now;
+      const distance = countdownDate - now;
 
       if (distance < 0) {
-        clearInterval(countdownInterval);
+        clearInterval(countdownFunction);
         document.getElementById("countdown").style.display = "none";
-        document.getElementById("formNISN").style.display = "block";
+        document.getElementById("infoText").innerText = "Silakan masukkan NISN Anda:";
+        document.getElementById("inputSection").style.display = "flex";
         return;
       }
 
@@ -162,33 +183,29 @@
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      document.getElementById("countdown").innerHTML = `
-        <div>${days} <br><small>Hari</small></div>
-        <div>${hours} <br><small>Jam</small></div>
-        <div>${minutes} <br><small>Menit</small></div>
-        <div>${seconds} <br><small>Detik</small></div>
-      `;
+      document.getElementById("days").innerText = String(days).padStart(2, '0');
+      document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+      document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+      document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
     }, 1000);
 
     function cekKelulusan() {
-      const nisn = document.getElementById("nisn").value;
-      const hasil = document.getElementById("hasil");
+      const nisn = document.getElementById("nisnInput").value.trim();
+      const emoji = document.getElementById("statusEmoji");
 
-      hasil.innerHTML = "<p>Memeriksa data, mohon tunggu...</p>";
-      setTimeout(() => {
-        if (dataSiswa[nisn]) {
-          const siswa = dataSiswa[nisn];
-          const isLulus = siswa.status === "LULUS";
-          const emojiClass = isLulus ? "happy" : "sad";
-          const emoji = isLulus ? "🎉" : "😢";
-          const pesan = isLulus ?
-            `Selamat <strong>${siswa.nama}</strong>, Anda dinyatakan <strong>${siswa.status}</strong> <span class="emoji ${emojiClass}">${emoji}</span>` :
-            `Maaf <strong>${siswa.nama}</strong>, Anda <strong>${siswa.status}</strong> <span class="emoji ${emojiClass}">${emoji}</span><div class='motivation'>Jangan menyerah, tetap semangat ya!</div>`;
-          hasil.innerHTML = `<p>${pesan}</p>`;
-        } else {
-          hasil.innerHTML = "<p>NISN tidak ditemukan. Silakan cek kembali.</p>";
-        }
-      }, 2000); // efek delay 2 detik
+      // Contoh NISN lulus atau tidak (nanti kamu ganti dengan logikamu sendiri)
+      if (nisn === "1234567890") {
+        emoji.innerText = "🎉";
+        emoji.style.display = "block";
+        confetti({
+          particleCount: 200,
+          spread: 90,
+          origin: { y: 0.6 }
+        });
+      } else {
+        emoji.innerText = "😢";
+        emoji.style.display = "block";
+      }
     }
   </script>
 </body>
