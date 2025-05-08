@@ -145,6 +145,14 @@
       display: none;
       animation: fadeIn 1s ease-in-out;
     }
+
+    .motivasi {
+      font-size: 1.2em;
+      margin-top: 10px;
+      color: #f39c12;
+      font-weight: bold;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -166,6 +174,8 @@
     </div>
 
     <div class="emoji" id="statusEmoji">🎉</div>
+
+    <div id="motivasiText" class="motivasi"></div>
 
     <footer>
       © 2025 SMP NEGERI 2 AMPANA KOTA<br>
@@ -199,24 +209,37 @@
       document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
     }, 1000);
 
+    // Data siswa
+    const siswaData = [
+      { nisn: "1234567890", nama: "Ahmad Zaki", lulus: true },
+      { nisn: "0987654321", nama: "Dina Safira", lulus: false }
+    ];
+
     function cekKelulusan() {
       const nisn = document.getElementById("nisnInput").value.trim();
       const emoji = document.getElementById("statusEmoji");
+      const motivasiText = document.getElementById("motivasiText");
 
-      // Contoh NISN lulus atau tidak (nanti kamu ganti dengan logikamu sendiri)
-      if (nisn === "1234567890") {
-        emoji.innerText = "🎉";
-        emoji.style.display = "block";
-        confetti({
-          particleCount: 200,
-          spread: 90,
-          origin: { y: 0.6 }
-        });
+      const siswa = siswaData.find(siswa => siswa.nisn === nisn);
+
+      if (siswa) {
+        if (siswa.lulus) {
+          emoji.innerText = "🎉";
+          emoji.style.display = "block";
+          motivasiText.innerText = `Selamat, ${siswa.nama}! Kamu LULUS! Terus semangat dan raih cita-citamu!`;
+          motivasiText.style.display = "block";
+          confetti({
+            particleCount: 200,
+            spread: 90,
+            origin: { y: 0.6 }
+          });
+        } else {
+          emoji.innerText = "😢";
+          emoji.style.display = "block";
+          motivasiText.innerText = `Maaf, ${siswa.nama}. Kamu TIDAK LULUS. Jangan menyerah, terus berjuang!`;
+          motivasiText.style.display = "block";
+        }
       } else {
-        emoji.innerText = "😢";
+        emoji.innerText = "❓";
         emoji.style.display = "block";
-      }
-    }
-  </script>
-</body>
-</html>
+        motivasiText.innerText = "NISN
