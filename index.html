@@ -51,11 +51,10 @@
 
     .countdown {
       display: flex;
-      justify-content: center; /* Menyelaraskan item secara horizontal di tengah */
-      align-items: center; /* Menyelaraskan item secara vertikal di tengah */
+      justify-content: center;
       gap: 10px;
       margin-top: 20px;
-      flex-wrap: nowrap; /* Menghindari pembungkusan (wrap) elemen */
+      flex-wrap: nowrap;
     }
 
     .countdown div {
@@ -65,9 +64,9 @@
       border-radius: 15px;
       font-size: 1.5em;
       min-width: 60px;
-      display: flex; /* Menjadikan elemen box sebagai flex container */
-      justify-content: center; /* Menyelaraskan isi box secara horizontal */
-      align-items: center; /* Menyelaraskan isi box secara vertikal */
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     #inputSection {
@@ -242,4 +241,10 @@
       } else {
         emoji.innerText = "❓";
         emoji.style.display = "block";
-        motivasiText.innerText = "NISN
+        motivasiText.innerText = "NISN tidak ditemukan, periksa kembali NISN Anda.";
+        motivasiText.style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>
