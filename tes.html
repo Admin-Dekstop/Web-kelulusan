@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download SKL</title>
+    <script>
+        // Daftar NSN dan file SKL terkait
+        const sklFiles = {
+            "1234567890": "1234567890.pdf",
+            "9876543210": "9876543210.pdf",
+            "1122334455": "1122334455.pdf"
+        };
+
+        // Fungsi untuk memvalidasi NSN dan menampilkan tombol download
+        function validateNSN() {
+            const nsnInput = document.getElementById("nsnInput").value;
+            const downloadLink = document.getElementById("downloadLink");
+            const errorMessage = document.getElementById("errorMessage");
+
+            if (sklFiles[nsnInput]) {
+                // Jika NSN valid, tampilkan tombol download
+                downloadLink.href = sklFiles[nsnInput];
+                downloadLink.style.display = "inline-block";
+                errorMessage.style.display = "none";
+            } else {
+                // Jika NSN tidak valid, tampilkan pesan error
+                downloadLink.style.display = "none";
+                errorMessage.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Download SKL</h1>
+    <p>Masukkan Nomor Seri Nasional (NSN) Anda untuk mengunduh SKL.</p>
+    <input type="text" id="nsnInput" placeholder="Masukkan NSN">
+    <button onclick="validateNSN()">Submit</button>
+    <br><br>
+    <a id="downloadLink" href="#" style="display: none;" download>Download SKL</a>
+    <p id="errorMessage" style="color: red; display: none;">NSN tidak ditemukan. Silakan coba lagi.</p>
+</body>
+</html>
