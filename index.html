@@ -4,42 +4,49 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pengumuman Kelulusan SMPN 2 Ampana Kota</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Arial', sans-serif;
       background-color: #111;
       color: #333;
-      text-align: center;
       margin: 0;
       padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
     }
+
     .container {
       max-width: 500px;
-      margin: auto;
+      width: 100%;
       padding: 20px;
       background-color: white;
-      border-radius: 25px;
-      margin-top: 40px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      text-align: center;
     }
+
     img {
       width: 100px;
       margin-bottom: 20px;
     }
+
     h1 {
-      font-size: 26px;
-      margin-bottom: 10px;
-      font-weight: 500;
+      font-size: 24px;
+      margin-bottom: 5px;
     }
+
     h2 {
-      font-size: 20px;
+      font-size: 18px;
       margin-bottom: 20px;
-      font-weight: 400;
     }
+
     .countdown, .result, .input-nisn {
       margin-top: 20px;
     }
+
     .countdown div {
       display: inline-block;
       margin: 0 10px;
@@ -50,6 +57,7 @@
       font-size: 20px;
       min-width: 50px;
     }
+
     input[type="text"] {
       width: 80%;
       padding: 10px;
@@ -57,12 +65,14 @@
       border: 2px solid #ccc;
       border-radius: 10px;
       margin-top: 10px;
+      text-align: center;
     }
+
     button {
       padding: 10px;
       margin: 10px 0;
       font-size: 16px;
-      width: 90%;
+      width: 80%;
       border-radius: 8px;
       border: none;
       background-color: #28a745; /* Green */
@@ -70,78 +80,58 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
+
     button:hover {
       background-color: #218838; /* Darker green */
     }
+
     .footer {
       margin-top: 30px;
       font-size: 14px;
       color: #aaa;
     }
+
     .emoji {
       font-size: 30px;
       margin-top: 10px;
-      opacity: 0;
-      animation-duration: 120s; /* Durasi animasi 2 menit */
-      animation-timing-function: ease-in-out;
-      animation-iteration-count: 1;
     }
-    .emoji.happy {
-      animation-name: explode;
-    }
-    .emoji.sad {
-      animation-name: fall;
-    }
-    @keyframes explode {
-      0% {
-        transform: scale(1);
-        opacity: 0;
-      }
-      10% {
-        transform: scale(1.5);
-        opacity: 1;
-      }
-      30% {
-        transform: scale(1.8);
-      }
-      50% {
-        transform: scale(2.5);
-        opacity: 1;
-      }
-      80% {
-        transform: scale(2);
-        opacity: 0.7;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 0;
-      }
-    }
-    @keyframes fall {
-      0% {
-        transform: translateY(-100px) scale(1);
-        opacity: 0;
-      }
-      50% {
-        transform: translateY(50px) scale(1.5);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-    }
+
     .motivation {
       margin-top: 10px;
       font-style: italic;
     }
+
+    @keyframes fall {
+      0% { transform: translateY(-100px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .emoji.sad {
+      animation: fall 1s ease-out;
+    }
+
+    @keyframes explode {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1.5); opacity: 1; }
+    }
+
+    .emoji.happy {
+      animation: explode 2s ease-out;
+    }
+
     @media (max-width: 600px) {
       .container {
         margin: 20px;
-        width: auto;
+        padding: 15px;
       }
+
       input[type="text"], button {
-        width: 100%;
+        width: 90%;
+      }
+
+      .countdown div {
+        font-size: 18px;
+        padding: 10px;
       }
     }
   </style>
@@ -204,17 +194,12 @@
       if (dataSiswa[nisn]) {
         const siswa = dataSiswa[nisn];
         const emoji = siswa.status === "LULUS" ? "🎉" : "😢";
-        const emojiElement = document.createElement('span');
-        emojiElement.classList.add('emoji');
-        emojiElement.classList.add(siswa.status === "LULUS" ? 'happy' : 'sad');
-        emojiElement.textContent = emoji;
-
+        const animasi = siswa.status === "LULUS" ? "happy" : "sad";
         const pesan = siswa.status === "LULUS" ?
-          `Selamat ${siswa.nama}, Anda dinyatakan <strong>${siswa.status}</strong>` :
-          `Maaf ${siswa.nama}, Anda <strong>${siswa.status}</strong><div class='motivation'>Jangan menyerah, tetap semangat ya!</div>`;
+          `Selamat ${siswa.nama}, Anda dinyatakan <strong>${siswa.status}</strong> ${emoji}` :
+          `Maaf ${siswa.nama}, Anda <strong>${siswa.status}</strong> ${emoji}<div class='motivation'>Jangan menyerah, tetap semangat ya!</div>`;
 
-        hasil.innerHTML = `<p>${pesan}</p>`;
-        hasil.appendChild(emojiElement);  // Add the emoji to the result div
+        hasil.innerHTML = `<p>${pesan}</p><div class="emoji ${animasi}">${emoji}</div>`;
       } else {
         hasil.innerHTML = "<p>NISN tidak ditemukan. Silakan cek kembali.</p>";
       }
