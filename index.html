@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pengumuman Kelulusan SMPN 2 Ampana Kota</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-family: 'Roboto', sans-serif;
       background-color: #111;
       color: #333;
       text-align: center;
@@ -27,12 +28,14 @@
       margin-bottom: 20px;
     }
     h1 {
-      font-size: 22px;
-      margin-bottom: 5px;
+      font-size: 26px;
+      margin-bottom: 10px;
+      font-weight: 500;
     }
     h2 {
-      font-size: 18px;
+      font-size: 20px;
       margin-bottom: 20px;
+      font-weight: 400;
     }
     .countdown, .result, .input-nisn {
       margin-top: 20px;
@@ -78,17 +81,59 @@
     .emoji {
       font-size: 30px;
       margin-top: 10px;
+      opacity: 0;
+      animation-duration: 120s; /* Durasi animasi 2 menit */
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: 1;
+    }
+    .emoji.happy {
+      animation-name: explode;
+    }
+    .emoji.sad {
+      animation-name: fall;
+    }
+    @keyframes explode {
+      0% {
+        transform: scale(1);
+        opacity: 0;
+      }
+      10% {
+        transform: scale(1.5);
+        opacity: 1;
+      }
+      30% {
+        transform: scale(1.8);
+      }
+      50% {
+        transform: scale(2.5);
+        opacity: 1;
+      }
+      80% {
+        transform: scale(2);
+        opacity: 0.7;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0;
+      }
+    }
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) scale(1);
+        opacity: 0;
+      }
+      50% {
+        transform: translateY(50px) scale(1.5);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
     }
     .motivation {
       margin-top: 10px;
       font-style: italic;
-    }
-    @keyframes fall {
-      0% { transform: translateY(-100px); opacity: 0; }
-      100% { transform: translateY(0); opacity: 1; }
-    }
-    .emoji.sad {
-      animation: fall 1s ease-out;
     }
     @media (max-width: 600px) {
       .container {
@@ -159,11 +204,17 @@
       if (dataSiswa[nisn]) {
         const siswa = dataSiswa[nisn];
         const emoji = siswa.status === "LULUS" ? "🎉" : "😢";
+        const emojiElement = document.createElement('span');
+        emojiElement.classList.add('emoji');
+        emojiElement.classList.add(siswa.status === "LULUS" ? 'happy' : 'sad');
+        emojiElement.textContent = emoji;
+
         const pesan = siswa.status === "LULUS" ?
-          `Selamat ${siswa.nama}, Anda dinyatakan <strong>${siswa.status}</strong> ${emoji}` :
-          `Maaf ${siswa.nama}, Anda <strong>${siswa.status}</strong> ${emoji}<div class='motivation'>Jangan menyerah, tetap semangat ya!</div>`;
+          `Selamat ${siswa.nama}, Anda dinyatakan <strong>${siswa.status}</strong>` :
+          `Maaf ${siswa.nama}, Anda <strong>${siswa.status}</strong><div class='motivation'>Jangan menyerah, tetap semangat ya!</div>`;
 
         hasil.innerHTML = `<p>${pesan}</p>`;
+        hasil.appendChild(emojiElement);  // Add the emoji to the result div
       } else {
         hasil.innerHTML = "<p>NISN tidak ditemukan. Silakan cek kembali.</p>";
       }
