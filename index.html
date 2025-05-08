@@ -5,6 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pengumuman Kelulusan Siswa Tahun Pelajaran 2024/2025</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script>
+    // Daftar NSN dan file SKL terkait
+    const sklFiles = {
+        "1234567890": "1234567890.pdf",
+        "9876543210": "9876543210.pdf",
+        "1122334455": "1122334455.pdf"
+    };
+
+    // Fungsi untuk memvalidasi NISN dan menampilkan tombol download SKL
+    function validateNSN() {
+        const nisnInput = document.getElementById("nisnInput").value.trim();
+        const downloadLink = document.getElementById("downloadLink");
+        const errorMessage = document.getElementById("errorMessage");
+
+        if (sklFiles[nisnInput]) {
+            // Jika NISN valid, tampilkan tombol download
+            downloadLink.href = sklFiles[nisnInput];
+            downloadLink.style.display = "inline-block";
+            errorMessage.style.display = "none";
+        } else {
+            // Jika NISN tidak valid, tampilkan pesan error
+            downloadLink.style.display = "none";
+            errorMessage.style.display = "block";
+        }
+
+        cekKelulusan();  // Cek kelulusan setelah input NISN
+    }
+
+    // Fungsi cek kelulusan
+    const siswaData = [
+      { nisn: "1234567890", nama: "Ahmad Zaki", lulus: true },
+      { nisn: "0987654321", nama: "Dina Safira", lulus: false },
+      { nisn: "1122334455", nama: "Dani", lulus: true }
+    ];
+
+    function cekKelulusan() {
+        const nisn = document.getElementById("nisnInput").value.trim();
+        const emoji = document.getElementById("statusEmoji");
+        const motivasiText = document.getElementById("motivasiText");
+
+        const siswa = siswaData.find(siswa => siswa.nisn === nisn);
+
+        if (siswa) {
+            if (siswa.lulus) {
+                emoji.innerText = "🎉";
+                emoji.style.display = "block";
+                motivasiText.innerText = `Selamat, ${siswa.nama}! Kamu LULUS! Terus semangat dan raih cita-citamu!`;
+                motivasiText.style.display = "block";
+                confetti({
+                    particleCount: 200,
+                    spread: 90,
+                    origin: { y: 0.6 }
+                });
+            } else {
+                emoji.innerText = "😢";
+                emoji.style.display = "block";
+                motivasiText.innerText = `Maaf, ${siswa.nama}. Kamu TIDAK LULUS. Jangan menyerah, terus berjuang!`;
+                motivasiText.style.display = "block";
+            }
+        } else {
+            emoji.innerText = "❓";
+            emoji.style.display = "block";
+            motivasiText.innerText = "NISN tidak ditemukan, periksa kembali NISN Anda.";
+            motivasiText.style.display = "block";
+        }
+    }
+  </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
 
@@ -152,6 +219,21 @@
       font-weight: bold;
       display: none;
     }
+
+    #downloadLink {
+      display: none;
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #27ae60;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    #errorMessage {
+      color: red;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -169,12 +251,15 @@
 
     <div id="inputSection">
       <input id="nisnInput" type="text" placeholder="Masukkan NISN Anda" />
-      <button onclick="cekKelulusan()">Cek Kelulusan</button>
+      <button onclick="validateNSN()">Cek Kelulusan</button>
     </div>
 
     <div class="emoji" id="statusEmoji">🎉</div>
 
     <div id="motivasiText" class="motivasi"></div>
+
+    <a id="downloadLink" href="#" download>Download SKL</a>
+    <p id="errorMessage">NISN tidak ditemukan. Silakan coba lagi.</p>
 
     <footer>
       © 2025 SMP NEGERI 2 AMPANA KOTA<br>
@@ -207,44 +292,6 @@
       document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
       document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
     }, 1000);
-
-    // Data siswa
-    const siswaData = [
-      { nisn: "1234567890", nama: "Ahmad Zaki", lulus: true },
-      { nisn: "0987654321", nama: "Dina Safira", lulus: false }
-    ];
-
-    function cekKelulusan() {
-      const nisn = document.getElementById("nisnInput").value.trim();
-      const emoji = document.getElementById("statusEmoji");
-      const motivasiText = document.getElementById("motivasiText");
-
-      const siswa = siswaData.find(siswa => siswa.nisn === nisn);
-
-      if (siswa) {
-        if (siswa.lulus) {
-          emoji.innerText = "🎉";
-          emoji.style.display = "block";
-          motivasiText.innerText = `Selamat, ${siswa.nama}! Kamu LULUS! Terus semangat dan raih cita-citamu!`;
-          motivasiText.style.display = "block";
-          confetti({
-            particleCount: 200,
-            spread: 90,
-            origin: { y: 0.6 }
-          });
-        } else {
-          emoji.innerText = "😢";
-          emoji.style.display = "block";
-          motivasiText.innerText = `Maaf, ${siswa.nama}. Kamu TIDAK LULUS. Jangan menyerah, terus berjuang!`;
-          motivasiText.style.display = "block";
-        }
-      } else {
-        emoji.innerText = "❓";
-        emoji.style.display = "block";
-        motivasiText.innerText = "NISN tidak ditemukan, periksa kembali NISN Anda.";
-        motivasiText.style.display = "block";
-      }
-    }
   </script>
 </body>
 </html>
