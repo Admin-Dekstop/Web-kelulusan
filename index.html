@@ -2,34 +2,70 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pengumuman Kelulusan</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
-      margin: 0;
-      font-family: 'Comic Sans MS', sans-serif;
+      font-family: Arial, sans-serif;
       background-color: #000;
       color: #fff;
-      text-align: center;
+      margin: 0;
+      padding: 0;
     }
-    .container {
-      max-width: 500px;
+    .wrapper {
+      max-width: 600px;
       margin: auto;
       padding: 20px;
-      background: #fff;
+      background-color: #fff;
       color: #000;
-      border-radius: 20px;
-      margin-top: 50px;
+      border-radius: 15px;
+      margin-top: 30px;
+      text-align: center;
+    }
+    h1, h2 {
+      margin: 0 0 10px;
     }
     input, button {
-      font-size: 18px;
       padding: 10px;
-      margin-top: 10px;
-      border-radius: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      width: 90%;
+      border-radius: 8px;
+      border: 1px solid #ccc;
     }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      color: #aaa;
+      font-size: 14px;
+    }
+    img.logo {
+      width: 80px;
+      margin-bottom: 10px;
+    }
+
+    /* Responsif */
+    @media screen and (max-width: 600px) {
+      .wrapper {
+        margin: 10px;
+        padding: 15px;
+      }
+      input, button {
+        font-size: 14px;
+      }
+    }
+
+    /* Efek konfeti 🎉 */
     #confetti, #emoji-sad {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       pointer-events: none;
@@ -38,7 +74,7 @@
     .confetti {
       position: absolute;
       animation: explode 2s ease-out forwards;
-      font-size: 30px;
+      font-size: 28px;
     }
     @keyframes explode {
       0% { transform: translate(0,0) scale(1); opacity: 1; }
@@ -47,31 +83,19 @@
         opacity: 0;
       }
     }
+
+    /* Efek sedih 😢 */
     .emoji-sad {
       position: absolute;
-      top: -50px;
-      font-size: 40px;
-      animation: fall 4s ease-in forwards;
+      top: -40px;
+      font-size: 30px;
+      animation: fall 3s ease-in forwards;
     }
     @keyframes fall {
       to {
         top: 100%;
         opacity: 0;
       }
-    }
-    #result {
-      margin-top: 20px;
-      font-size: 20px;
-      font-weight: bold;
-    }
-    footer {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #ccc;
-    }
-    .motivation {
-      margin-top: 15px;
-      font-style: italic;
     }
   </style>
 </head>
@@ -80,14 +104,14 @@
 <div id="confetti"></div>
 <div id="emoji-sad"></div>
 
-<div class="container">
-  <img src="https://upload.wikimedia.org/wikipedia/id/f/f3/Logo_SMP_Negeri_2_Ampana_Kota.png" alt="Logo Sekolah" width="100">
-  <h2>Pengumuman Kelulusan Siswa</h2>
-  <p>SMP Negeri 2 Ampana Kota<br>Tahun Ajaran 2024/2025</p>
+<div class="wrapper">
+  <img class="logo" src="https://upload.wikimedia.org/wikipedia/id/f/f3/Logo_SMP_Negeri_2_Ampana_Kota.png" alt="Logo Sekolah">
+  <h2>Pengumuman Kelulusan</h2>
+  <p>SMP Negeri 2 Ampana Kota</p>
+  <p>Tahun Ajaran 2024/2025</p>
 
-  <p>Masukkan NISN Anda:</p>
-  <input type="text" id="nisn" placeholder="Contoh: 1234567890"><br>
-  <button onclick="cekKelulusan()">Lihat Hasil Kelulusan</button>
+  <input type="text" id="nisn" placeholder="Masukkan NISN">
+  <button onclick="cekKelulusan()">Lihat Hasil</button>
 
   <div id="result"></div>
 </div>
@@ -105,60 +129,56 @@ const dataSiswa = {
 
 function cekKelulusan() {
   const nisn = document.getElementById("nisn").value.trim();
-  const resultDiv = document.getElementById("result");
-  resultDiv.innerHTML = "";
+  const result = document.getElementById("result");
+  result.innerHTML = "";
 
   if (dataSiswa[nisn]) {
     const siswa = dataSiswa[nisn];
-    resultDiv.innerHTML = `
-      Nama: ${siswa.nama}<br>
-      Status: ${siswa.status}
+    result.innerHTML = `
+      <p>Nama: <strong>${siswa.nama}</strong></p>
+      <p>Status: <strong>${siswa.status}</strong></p>
     `;
 
     if (siswa.status === "LULUS") {
       confettiEffect();
-      setTimeout(() => {
-        resultDiv.innerHTML += `<div class="motivation">🎓 Selamat! Jangan berhenti belajar ya. Masa depan menantimu! 💪</div>`;
-      }, 3000);
+      result.innerHTML += `<p style="color:green;">🎓 Selamat ya! Masa depanmu dimulai sekarang!</p>`;
     } else {
       emojiSadEffect();
-      setTimeout(() => {
-        resultDiv.innerHTML += `<div class="motivation">😥 Jangan berkecil hati, kegagalan bukan akhir segalanya. Terus semangat dan coba lagi!</div>`;
-      }, 3000);
+      result.innerHTML += `<p style="color:red;">😥 Tetap semangat, kegagalan adalah awal kesuksesan!</p>`;
     }
 
   } else {
-    resultDiv.innerHTML = "NISN tidak ditemukan.";
+    result.innerHTML = `<p style="color:orange;">NISN tidak ditemukan.</p>`;
   }
 }
 
 function confettiEffect() {
   const container = document.getElementById("confetti");
   container.innerHTML = "";
-  for (let i = 0; i < 150; i++) {
-    const confetti = document.createElement("div");
-    confetti.textContent = "🎉";
-    confetti.className = "confetti";
-    confetti.style.setProperty('--x', Math.random());
-    confetti.style.setProperty('--y', Math.random());
-    confetti.style.left = `${Math.random() * 100}%`;
-    confetti.style.top = `${Math.random() * 100}%`;
-    container.appendChild(confetti);
+  for (let i = 0; i < 100; i++) {
+    const c = document.createElement("div");
+    c.textContent = "🎉";
+    c.className = "confetti";
+    c.style.setProperty('--x', Math.random());
+    c.style.setProperty('--y', Math.random());
+    c.style.left = `${Math.random() * 100}%`;
+    c.style.top = `${Math.random() * 100}%`;
+    container.appendChild(c);
   }
-  setTimeout(() => container.innerHTML = "", 10000); // 10 detik efek
+  setTimeout(() => container.innerHTML = "", 8000);
 }
 
 function emojiSadEffect() {
   const container = document.getElementById("emoji-sad");
   container.innerHTML = "";
   for (let i = 0; i < 30; i++) {
-    const emoji = document.createElement("div");
-    emoji.className = "emoji-sad";
-    emoji.style.left = `${Math.random() * 90 + 5}%`;
-    emoji.textContent = "😢";
-    container.appendChild(emoji);
+    const e = document.createElement("div");
+    e.className = "emoji-sad";
+    e.textContent = "😢";
+    e.style.left = `${Math.random() * 95}%`;
+    container.appendChild(e);
   }
-  setTimeout(() => container.innerHTML = "", 10000); // 10 detik efek
+  setTimeout(() => container.innerHTML = "", 8000);
 }
 </script>
 
