@@ -6,58 +6,50 @@
   <title>Pengumuman Kelulusan SMPN 2 Ampana Kota</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #111;
       color: #333;
+      text-align: center;
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
     }
-
     .container {
       max-width: 500px;
-      width: 100%;
+      margin: 40px auto;
       padding: 20px;
       background-color: white;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-      text-align: center;
+      border-radius: 25px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
     }
-
     img {
       width: 100px;
       margin-bottom: 20px;
     }
-
     h1 {
       font-size: 24px;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
     }
-
     h2 {
       font-size: 18px;
       margin-bottom: 20px;
     }
-
-    .countdown, .result, .input-nisn {
-      margin-top: 20px;
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
-
     .countdown div {
-      display: inline-block;
-      margin: 0 10px;
       background-color: #2c3e50;
       color: white;
       padding: 15px;
       border-radius: 15px;
       font-size: 20px;
-      min-width: 50px;
+      min-width: 60px;
     }
-
+    .input-nisn {
+      margin-top: 20px;
+    }
     input[type="text"] {
       width: 80%;
       padding: 10px;
@@ -65,73 +57,60 @@
       border: 2px solid #ccc;
       border-radius: 10px;
       margin-top: 10px;
-      text-align: center;
     }
-
     button {
       padding: 10px;
       margin: 10px 0;
       font-size: 16px;
-      width: 80%;
+      width: 90%;
       border-radius: 8px;
       border: none;
-      background-color: #28a745; /* Green */
+      background-color: #28a745;
       color: white;
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-
     button:hover {
-      background-color: #218838; /* Darker green */
+      background-color: #218838;
     }
-
+    .result {
+      margin-top: 30px;
+      font-size: 18px;
+    }
     .footer {
       margin-top: 30px;
       font-size: 14px;
       color: #aaa;
     }
-
     .emoji {
-      font-size: 30px;
-      margin-top: 10px;
+      font-size: 40px;
+      display: inline-block;
+      animation: popIn 2s ease-in-out;
     }
-
     .motivation {
       margin-top: 10px;
       font-style: italic;
     }
-
-    @keyframes fall {
-      0% { transform: translateY(-100px); opacity: 0; }
-      100% { transform: translateY(0); opacity: 1; }
+    @keyframes popIn {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
     }
-
-    .emoji.sad {
-      animation: fall 1s ease-out;
-    }
-
     @keyframes explode {
       0% { transform: scale(0); opacity: 0; }
-      100% { transform: scale(1.5); opacity: 1; }
+      50% { transform: scale(2); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
     }
-
     .emoji.happy {
-      animation: explode 2s ease-out;
+      animation: explode 2s ease-in-out;
     }
-
     @media (max-width: 600px) {
       .container {
         margin: 20px;
-        padding: 15px;
+        width: auto;
       }
-
       input[type="text"], button {
-        width: 90%;
-      }
-
-      .countdown div {
-        font-size: 18px;
-        padding: 10px;
+        width: 100%;
       }
     }
   </style>
@@ -165,7 +144,7 @@
       "9876543210": { nama: "Susi Andini", status: "TIDAK LULUS" }
     };
 
-    const targetTanggal = new Date("2025-05-08T11:40:00+08:00").getTime();
+    const targetTanggal = new Date("2025-05-08T11:45:00+08:00").getTime();
 
     const countdownInterval = setInterval(() => {
       const now = new Date().getTime();
@@ -183,26 +162,33 @@
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      document.getElementById("countdown").innerHTML =
-        `<div>${days}</div><div>${hours}</div><div>${minutes}</div><div>${seconds}</div>`;
+      document.getElementById("countdown").innerHTML = `
+        <div>${days} <br><small>Hari</small></div>
+        <div>${hours} <br><small>Jam</small></div>
+        <div>${minutes} <br><small>Menit</small></div>
+        <div>${seconds} <br><small>Detik</small></div>
+      `;
     }, 1000);
 
     function cekKelulusan() {
       const nisn = document.getElementById("nisn").value;
       const hasil = document.getElementById("hasil");
 
-      if (dataSiswa[nisn]) {
-        const siswa = dataSiswa[nisn];
-        const emoji = siswa.status === "LULUS" ? "🎉" : "😢";
-        const animasi = siswa.status === "LULUS" ? "happy" : "sad";
-        const pesan = siswa.status === "LULUS" ?
-          `Selamat ${siswa.nama}, Anda dinyatakan <strong>${siswa.status}</strong> ${emoji}` :
-          `Maaf ${siswa.nama}, Anda <strong>${siswa.status}</strong> ${emoji}<div class='motivation'>Jangan menyerah, tetap semangat ya!</div>`;
-
-        hasil.innerHTML = `<p>${pesan}</p><div class="emoji ${animasi}">${emoji}</div>`;
-      } else {
-        hasil.innerHTML = "<p>NISN tidak ditemukan. Silakan cek kembali.</p>";
-      }
+      hasil.innerHTML = "<p>Memeriksa data, mohon tunggu...</p>";
+      setTimeout(() => {
+        if (dataSiswa[nisn]) {
+          const siswa = dataSiswa[nisn];
+          const isLulus = siswa.status === "LULUS";
+          const emojiClass = isLulus ? "happy" : "sad";
+          const emoji = isLulus ? "🎉" : "😢";
+          const pesan = isLulus ?
+            `Selamat <strong>${siswa.nama}</strong>, Anda dinyatakan <strong>${siswa.status}</strong> <span class="emoji ${emojiClass}">${emoji}</span>` :
+            `Maaf <strong>${siswa.nama}</strong>, Anda <strong>${siswa.status}</strong> <span class="emoji ${emojiClass}">${emoji}</span><div class='motivation'>Jangan menyerah, tetap semangat ya!</div>`;
+          hasil.innerHTML = `<p>${pesan}</p>`;
+        } else {
+          hasil.innerHTML = "<p>NISN tidak ditemukan. Silakan cek kembali.</p>";
+        }
+      }, 2000); // efek delay 2 detik
     }
   </script>
 </body>
